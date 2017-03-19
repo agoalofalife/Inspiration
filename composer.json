@@ -1,0 +1,31 @@
+{
+    "name": "agoalofalife/inspiration",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "agoalofalife",
+            "email": "agoalofalife@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^5.4"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6",
+        "laravel/laravel": "^5.4",
+        "mockery/mockery": "^0.9.9",
+        "phpunit/phpunit": "^5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Inspiration\\": "app/",
+            "Inspiration\\Seeds\\": "database/seeds/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
