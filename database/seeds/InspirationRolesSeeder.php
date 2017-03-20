@@ -1,6 +1,7 @@
 <?php
 namespace Inspiration\Seeds;
 use Illuminate\Database\Seeder;
+use Inspiration\Models\Role;
 
 class InspirationRolesSeeder extends Seeder
 {
@@ -11,17 +12,12 @@ class InspirationRolesSeeder extends Seeder
     {
 
         $this->isValue('administrator', function(){
-            \DB::table('roles')->insert(
-                ['name' => 'administrator', 'display_name' => 'Administrator']
-            );
+            Role::firstOrCreate(['name' => 'administrator', 'display_name' => 'Administrator'] );
         });
 
         $this->isValue('user', function(){
-            \DB::table('roles')->insert(
-                ['name' => 'user', 'display_name' => 'User']
-            );
+            Role::firstOrCreate(['name' => 'user', 'display_name' => 'User'] );
         });
-
     }
 
     /**
@@ -31,7 +27,7 @@ class InspirationRolesSeeder extends Seeder
      */
     private function isValue(string $name, callable $callback) : void
     {
-        if ( \DB::table('roles')->where('name', '=' , $name)->get()->isEmpty() )
+        if ( Role::where('name', $name)->get()->isEmpty() )
         {
             call_user_func($callback);
         }

@@ -21,7 +21,6 @@ class InspirationSeedCommand extends Command
      * @var string
      */
     protected $description = 'To fill table the application Inspiration';
-//    protected $path        = __DIR__ . '/../../database/seeds/';
     protected $namespace   = 'Inspiration\Seeds';
 
     public function __construct()

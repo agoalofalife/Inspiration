@@ -2,6 +2,7 @@
 
 namespace Inspiration\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Inspiration\Commands\InspirationSeedCommand;
 use Illuminate\Support\ServiceProvider;
 use Inspiration\Commands\InspirationCommand;
@@ -13,7 +14,7 @@ class InspirationProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot() : void
     {
         $this->registerRoutes();
         $this->registerConfig();
@@ -36,7 +37,7 @@ class InspirationProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register() : void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../../config/routes.php', 'inspiration.routes'
@@ -49,6 +50,11 @@ class InspirationProvider extends ServiceProvider
     public function registerRoutes() : void
     {
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+
+        Route::prefix('api/' . config('inspiration.routes.baseRoute'))
+            ->middleware('auth:api')
+            ->namespace('Inspiration\Http\Controllers')
+            ->group(__DIR__ . '/../../routes/api.php');
     }
 
     /**
@@ -58,7 +64,7 @@ class InspirationProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../../config/routes.php' => config_path('inspiration.routes.php'),
-        ]);
+        ], 'inspiration-config');
     }
 
     /**
@@ -82,7 +88,7 @@ class InspirationProvider extends ServiceProvider
     /**
      * Load migrations
      */
-    public function loadMigrations()
+    public function loadMigrations() : void
     {
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations/');
     }

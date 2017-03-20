@@ -9,6 +9,8 @@
         }
     ],
     "require": {
+        "php": ">=7.1",
+        "laravel/tinker": "~1.0",
         "laravel/framework": "^5.4"
     },
     "require-dev": {

@@ -33,8 +33,12 @@ class InspirationCommand extends Command
     public function handle()
     {
         $this->info('The application Inspiration begins the installation...');
+        $this->call('vendor:publish', ['--tag' => 'inspiration-config']);
+        $this->info('Configuration successfully copied');
         $this->call('migrate');
         $this->info('All migrations were applied successfully!');
+        $this->call('inspiration:seed', ['--class' => 'InspirationRolesSeeder']);
+        $this->info("Seeder InspirationRolesSeeder Successfully applied!");
 
     }
 }
