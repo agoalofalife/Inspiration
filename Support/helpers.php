@@ -1,24 +1,36 @@
 <?php
-if (! function_exists('addTextNode')) {
-
-    function addTextNode(string $pathFile, string $searchTextAfter, string $newTextNode = '')
+if (! function_exists('insertServiceProvider')) {
+    /**
+     *
+     * @param string $standingBeside
+     * @param string $newServiceProvider
+     */
+    function insertServiceProvider( string $standingBeside, string $newServiceProvider = '')
     {
-        $arr      = file($pathFile);
-        $newFile  = [];
-        $iterator = 0;
+        $pathToFile           = config_path('app.php');
+        $mask                 = "         " . $newServiceProvider .  ",\n";
+        $quoteServiceProvider = preg_quote($newServiceProvider);
 
-         array_walk($arr, function ($item) use (&$newFile, &$iterator, $searchTextAfter){
-            preg_match("/.+{$searchTextAfter}.+/", $item, $matches);
+        if ( file_exists($pathToFile) && preg_match('/\w+Provider::class/', $newServiceProvider) && (bool)preg_match("/.+$quoteServiceProvider.+/", file_get_contents($pathToFile)) === false )
+        {
+            $arrayStrings      = file($pathToFile);
+            $newFile           = [];
+            $iterator          = 0;
 
-            if ( empty($matches) === false)
+            foreach ($arrayStrings as $key => $nextLine)
             {
-
-                $newFile[$iterator] = $textNode;
+                preg_match("/$standingBeside/", $nextLine, $matches);
+                $newFile[$iterator] = $nextLine;
                 $iterator++;
+
+                if ( empty($matches) === false)
+                {
+                    $newFile[$iterator] = $mask;
+                    $iterator++;
+                }
             }
-            $newFile[$iterator] = $item;
-            $iterator++;
-        });
-        file_put_contents($pathFile, implode('',$newFile));
+
+            file_put_contents($pathToFile, implode('',$newFile));
+        }
     }
 }

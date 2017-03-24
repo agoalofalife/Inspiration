@@ -2,7 +2,9 @@
 
 namespace Inspiration\Providers;
 
+
 use Illuminate\Support\Facades\Route;
+use Inspiration\Commands\InsertServiceProvider;
 use Inspiration\Commands\InspirationSeedCommand;
 use Illuminate\Support\ServiceProvider;
 use Inspiration\Commands\InspirationCommand;
@@ -28,7 +30,8 @@ class InspirationProvider extends ServiceProvider
     {
         $this->commands([
             InspirationCommand::class,
-            InspirationSeedCommand::class
+            InspirationSeedCommand::class,
+            InsertServiceProvider::class
         ]);
     }
 
